@@ -70,3 +70,7 @@ with open(r"Dummy_Data\Test_Copy\NY_Truck_Transfers_NYO_Dummy_Data_CSV.csv","r")
             dictionary['Item Count'] = Item_Counts[i]
             dictionary['Location'] = Locations[i]
             shipments.append(dictionary)
+    packedshipments = list(filter(lambda x : x["Status"] ==  "Packed", shipments))
+    # print(shipments[1]["Status"])         
+    print(packedshipments)   
+            
