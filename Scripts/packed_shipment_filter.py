@@ -7,8 +7,6 @@ import csv
 
 with open(r".\Dummy_Data\Test_Copy\NY_Truck_Transfers_NYO_Dummy_Data_CSV.csv","r") as csv_file:
     csv_reader = csv.DictReader(csv_file)
-#    NOTE - Variable names need to be cleaned up, refer to style guide
-# Entries to be zipped
     Names = []
     Status =[]
     Item_Numbers = []
@@ -39,8 +37,6 @@ with open(r".\Dummy_Data\Test_Copy\NY_Truck_Transfers_NYO_Dummy_Data_CSV.csv","r
         Senders.append( row['Sender'])
         Recipients.append( row['Recipient'])
         Venues.append( row['Venue'])
-        Sales_Numbers.append( row['Sale #'])
-        Sale_Deadlines.append( row['Sale Deadline'])
         Values.append( row['Value'])
         Item_Counts.append( row['Item Count'])
         Locations.append( row['Location'])
@@ -59,13 +55,8 @@ with open(r".\Dummy_Data\Test_Copy\NY_Truck_Transfers_NYO_Dummy_Data_CSV.csv","r
             dictionary['Sender'] = Senders[i]
             dictionary['Recipient'] = Recipients[i]
             dictionary['Venue'] = Venues[i] 
-            dictionary['Sale #'] = Sales_Numbers[i]
-            # dictionary['Sale Deadline'] = Sale_Deadlines[i] Needs work issue with entries that are just hashtags
             dictionary['Value'] = Values[i]
             dictionary['Item Count'] = Item_Counts[i]
             dictionary['Location'] = Locations[i]
             shipments.append(dictionary)
     packedshipments = list(filter(lambda x : x["Status"] ==  "Packed", shipments))
-    # print(shipments[1]["Status"])         
-    print(packedshipments)   
-            
