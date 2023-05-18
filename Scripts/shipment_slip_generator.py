@@ -34,14 +34,26 @@ entries_to_be_added = [item for item in packedshipments if item['DID / REF'] not
     # The provided entries 
 
 doc = DocxTemplate("nyo_template.docx")
+# Context is used in an iteration -> Lambda Function or Loop
+# The package quantity will be determine whether package will be " " or 1.
+#   if package qty is 1, then package number is one  -  Else package is " "
+#   Type checking might be required for error checking as well - Verifying that numbers are numbers or of a certain lenght
+for item in entries_to_be_added:
+    print(f"{item['Item #']} - {item['Item Count']}")
+entry_in_list = entries_to_be_added[3]
+# print(f"This is the first entry\n\n {entry_in_list}") 
 context = {'Destination':"Dal",
            'Date_of_Departure':"1/1/2022",
-           'recipient':"gub gub",
-           'line_item':"435",
-           'client_number':"745292",
-            'package':10,
-            'package_quantity':93
+           'recipient':f"{entry_in_list['Recipient']}",
+           'line_item':f"{entry_in_list['Item #']}",
+           'client_number':f"{entry_in_list['Client #']}",
+            'package':" ",
+            'package_quantity':f"{entry_in_list['Item Count']}"
            }
+if(int(entry_in_list['Item Count']) > 1):
+    context['package'] = ' '
+else:
+    context['package'] = '1'
 
 doc.render(context)
 doc.save('test.docx')
