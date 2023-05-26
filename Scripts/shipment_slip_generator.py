@@ -38,24 +38,24 @@ doc = DocxTemplate("nyo_template.docx")
 # The package quantity will be determine whether package will be " " or 1.
 #   if package qty is 1, then package number is one  -  Else package is " "
 #   Type checking might be required for error checking as well - Verifying that numbers are numbers or of a certain lenght
+print(len(entries_to_be_added))
 for item in entries_to_be_added:
-    print(f"{item['Item #']} - {item['Item Count']}")
-entry_in_list = entries_to_be_added[3]
+    print(f"{item['Recipient']} - {item['Item #']} - {item['Client #']} -{item['Item Count']}")
 # print(f"This is the first entry\n\n {entry_in_list}") 
-context = {'Destination':"Dal",
-           'Date_of_Departure':"1/1/2022",
-           'recipient':f"{entry_in_list['Recipient']}",
-           'line_item':f"{entry_in_list['Item #']}",
-           'client_number':f"{entry_in_list['Client #']}",
-            'package':" ",
-            'package_quantity':f"{entry_in_list['Item Count']}"
-           }
-if(int(entry_in_list['Item Count']) > 1):
-    context['package'] = ' '
-else:
-    context['package'] = '1'
+    context = {'Destination':"Dal",
+            'Date_of_Departure':"1/1/2022",
+            'recipient':f"{item['Recipient']}",
+            'line_item':f"{item['Item #']}",
+            'client_number':f"{item['Client #']}",
+                'package':" ",
+                'package_quantity':f"{item['Item Count']}"
+            }
+    if(int(item['Item Count']) > 1):
+        context['package'] = ' '
+    else:
+        context['package'] = '1'
 
-doc.render(context)
-doc.save(f"../files_to_write_docs_too/D_ID_{entry_in_list['DID / REF']}.docx")
+    doc.render(context)
+    doc.save(f"../files_to_write_docs_too/D_ID_{item['DID / REF']}.docx")
 
 # Where will these things be saved?
