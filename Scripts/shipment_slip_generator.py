@@ -3,9 +3,10 @@ import re
 from docxtpl import DocxTemplate
 from packed_shipment_filter import packedshipments
 
-# # Take a provided directory(ask user),
-directory =str(input("Please provide directory for these files")) 
-#Use this path for the time being...'../files_to_write_docs_too'  # replace with the path to your directory
+date_of_departure = input("When will the Truck be leaving?")
+# truck_origin =input("Where is it coming from?") 
+# truck_destination =input("Where is it going?") 
+# origin_to_destination = f"{truck_origin} to {truck_destination}"
 
 def process_shipments(provided_directory):
     entries = os.scandir(provided_directory)
@@ -24,13 +25,16 @@ def process_shipments(provided_directory):
     doc = DocxTemplate("nyo_template.docx")
     print(len(entries_to_be_added))
     for item in entries_to_be_added: 
-        context = {'Destination':"Dal",
-                'Date_of_Departure':"1/1/2022", #Placeholder
+        # context = {'Destination':f"{origin_to_destination}",
+        # Bug Report - For some reason, it will write NYO without it being provided.
+        context = {'Destination':"DAL",
+                'Date_of_Departure':f"{date_of_departure}", #Placeholder
+                # 'Date_of_Departure':"1/12/1234", #Placeholder
                 'recipient':f"{item['Recipient']}",
                 'line_item':f"{item['Item #']}",
                 'client_number':f"{item['Client #']}",
-                    'package':" ",
-                    'package_quantity':f"{item['Item Count']}"
+                'package':" ",
+                'package_quantity':f"{item['Item Count']}"
                 }
         if(int(item['Item Count']) > 1):
             context['package'] = ' '
@@ -39,11 +43,5 @@ def process_shipments(provided_directory):
 
         doc.render(context)
         doc.save(f"../files_to_write_docs_too/D_ID_{item['DID / REF']}.docx")
-        return "Entries added to provided directory! 🙂"
-
-# Where will these things be saved/written too?
-def directory_exist
-if os.path.exists(directory):
-    process_shipments(directory)
-else:
-    print("This directory does not exist.")
+    return "Entries added to provided directory! 🙂"
+process_shipments('../files_to_write_docs_too')
