@@ -4,9 +4,9 @@ from docxtpl import DocxTemplate
 from packed_shipment_filter import packedshipments
 
 date_of_departure = input("When will the Truck be leaving?")
-# truck_origin =input("Where is it coming from?") 
-# truck_destination =input("Where is it going?") 
-# origin_to_destination = f"{truck_origin} to {truck_destination}"
+truck_origin =input("Where is it coming from?") 
+truck_destination =input("Where is it going?") 
+origin_to_destination = f"{truck_origin} to {truck_destination}"
 
 def process_shipments(provided_directory):
     entries = os.scandir(provided_directory)
@@ -27,7 +27,7 @@ def process_shipments(provided_directory):
     for item in entries_to_be_added: 
         # context = {'Destination':f"{origin_to_destination}",
         # Bug Report - For some reason, it will write NYO without it being provided.
-        context = {'Destination':"DAL",
+        context = {'Destination':f"{origin_to_destination}",
                 'Date_of_Departure':f"{date_of_departure}", #Placeholder
                 # 'Date_of_Departure':"1/12/1234", #Placeholder
                 'recipient':f"{item['Recipient']}",
